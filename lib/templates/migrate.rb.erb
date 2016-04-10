@@ -1,4 +1,4 @@
-class Create<%= @name %> < ActiveRecord::Migration
+class Create<%= @class %> < ActiveRecord::Migration
   def change
     create_table :<%= @table %> do |t|
       t.string :name
