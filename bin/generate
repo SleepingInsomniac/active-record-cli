@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+
+class Generate < Thor
+  include Thor::Actions
+  require 'active_support/inflector'
+  
+  desc "model NAME [fields...]", "Generate a new model"
+  def model(name)
+    @name = name.classify
+    template "model.rb.erb", "app/models/#{@name.underscore}.rb"
+    invoke :migration
+  end
+  
+  desc "migration NAME [fields...]", "Generate a new model"
+  def migration(name, fields = {})
+    @name = name.classify
+    @table = name.tableize
+    template "migrate.rb.erb", "db/migrate/#{Time.now.to_i}_create_#{@table}.rb"
+  end
+  
+private
+  def self.source_root
+    File.expand_path File.join(File.dirname(__FILE__), "../lib/templates/")
+  end
+end
+
+Generate.start(ARGV)

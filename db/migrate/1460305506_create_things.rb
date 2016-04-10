@@ -1,4 +1,4 @@
-class CreateThings < ActiveRecord::Migration
+class CreateThing < ActiveRecord::Migration
   def change
     create_table :things do |t|
       t.string :name
